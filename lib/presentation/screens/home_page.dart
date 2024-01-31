@@ -52,56 +52,71 @@ class _HomePageState extends State<HomePage> {
             child: const Icon(Icons.add, size: 30),
           ),
         ),
-        body: FutureBuilder(
-          future: _openBox(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (todoBox.isEmpty) {
-                return const Center(
-                  child: Text("No TODO TASK"),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: FutureBuilder(
+            future: _openBox(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (todoBox.isEmpty) {
+                  return const Center(
+                    child: Text("No TODO TASK"),
+                  );
+                }
+                final today = DateTime.now();
+                final tomorrow = today.add(const Duration(days: 1));
+
+                final todayTodos = todoBox.values.where((todo) {
+                  return todo.date.year == today.year &&
+                      todo.date.month == today.month &&
+                      todo.date.day == today.day;
+                }).toList();
+                final tomorrowTodos = todoBox.values.where((todo) {
+                  return todo.date.year == tomorrow.year &&
+                      todo.date.month == tomorrow.month &&
+                      todo.date.day == tomorrow.day;
+                }).toList();
+                return ListView(
+                  children: [
+                    if (todayTodos.isNotEmpty)
+                      _buildTodoGroup('Today', todayTodos),
+                    if (todayTodos.isEmpty)
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Today",
+                            style:
+                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Center(child: Text("No TODO TASKs")),
+                        ],
+                      ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    if (tomorrowTodos.isNotEmpty)
+                      _buildTodoGroup('Tomorrow', tomorrowTodos),
+                    if (tomorrowTodos.isEmpty)
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Tomorrow",
+                            style:
+                                TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Center(child: Text("No TODO TASKs")),
+                        ],
+                      ),
+                  ],
                 );
               }
-              final today = DateTime.now();
-              final tomorrow = today.add(const Duration(days: 1));
-
-              final todayTodos = todoBox.values.where((todo) {
-                return todo.date.year == today.year &&
-                    todo.date.month == today.month &&
-                    todo.date.day == today.day;
-              }).toList();
-              final tomorrowTodos = todoBox.values.where((todo) {
-                return todo.date.year == tomorrow.year &&
-                    todo.date.month == tomorrow.month &&
-                    todo.date.day == tomorrow.day;
-              }).toList();
-              return ListView(
-                children: [
-                  if (todayTodos.isNotEmpty)
-                    _buildTodoGroup('Today', todayTodos),
-                  if (todayTodos.isEmpty)
-                    const Text(
-                      "No TODO TODAY",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  if (tomorrowTodos.isNotEmpty)
-                    _buildTodoGroup('Tomorrow', tomorrowTodos),
-                  if (tomorrowTodos.isEmpty)
-                    const Text(
-                      "No TODO Tomorrow",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                ],
+              return const Center(
+                child: CircularProgressIndicator(),
               );
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
+            },
+          ),
         ));
   }
 
