@@ -81,34 +81,14 @@ class _HomePageState extends State<HomePage> {
                     if (todayTodos.isNotEmpty)
                       _groups('Today', todayTodos),
                     if (todayTodos.isEmpty)
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Today",
-                            style:
-                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          Center(child: Text("No TODO TASKs")),
-                        ],
-                      ),
+                      _noTODOGroup("Today"),
                     const SizedBox(
                       height: 50,
                     ),
                     if (tomorrowTodos.isNotEmpty)
                       _groups('Tomorrow', tomorrowTodos),
                     if (tomorrowTodos.isEmpty)
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Tomorrow",
-                            style:
-                                TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          Center(child: Text("No TODO TASKs")),
-                        ],
-                      ),
+                     _noTODOGroup("Tomorrow")
                   ],
                 );
               }
@@ -174,6 +154,19 @@ class _HomePageState extends State<HomePage> {
             );
           }).toList(),
         ),
+      ],
+    );
+  }
+  Widget _noTODOGroup(String title){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style:
+          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        Center(child: Text("No TODO TASKs")),
       ],
     );
   }
