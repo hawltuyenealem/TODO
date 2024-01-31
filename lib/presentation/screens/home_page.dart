@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                 return ListView(
                   children: [
                     if (todayTodos.isNotEmpty)
-                      _buildTodoGroup('Today', todayTodos),
+                      _groups('Today', todayTodos),
                     if (todayTodos.isEmpty)
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                       height: 50,
                     ),
                     if (tomorrowTodos.isNotEmpty)
-                      _buildTodoGroup('Tomorrow', tomorrowTodos),
+                      _groups('Tomorrow', tomorrowTodos),
                     if (tomorrowTodos.isEmpty)
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  Widget _buildTodoGroup(String title, List<TODOModel> todos) {
+  Widget _groups(String title, List<TODOModel> todos) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
