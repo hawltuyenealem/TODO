@@ -21,8 +21,8 @@ class TodoService {
     await box.putAt(index, updatedTodo);
   }
 
-  Future<void> deleteTodo(String id) async {
+  Future<void> deleteTodo(int index) async {
     final box = await Hive.openBox<TODOModel>(_boxName);
-    await box.delete(id);
+    await box.deleteAt(index);
   }
 }

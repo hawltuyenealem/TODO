@@ -49,7 +49,7 @@ class _AddTODOScreenState extends State<AddTODOScreen> {
           ),
           onPressed: () {
             _addTodo();
-            Navigator.pop(context,true);
+
           },
           child: const Text('Add TODO'),
         ),
@@ -148,7 +148,7 @@ class _AddTODOScreenState extends State<AddTODOScreen> {
         description: description
       );
       await TodoService().addTodo(todo);
-
+      Navigator.pop(context,true);
     } else {
 
       ScaffoldMessenger.of(context).showSnackBar(

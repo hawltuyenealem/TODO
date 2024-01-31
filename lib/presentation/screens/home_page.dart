@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("TODOS"),
+        title: const Text("TODOS List"),
         centerTitle: true,
       ),
       backgroundColor: Colors.grey.shade100,
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context,snapshot){
           if(snapshot.connectionState == ConnectionState.done){
             if(todoBox.isEmpty){
-              return Center(child: Text("No TODO TASK"),);
+              return const Center(child: Text("No TODO TASK"),);
             }
             return ListView.builder(
                  itemCount: todoBox.length,
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                     subtitle: Row(
                       children: [
                         Text(todo.description),
-                        SizedBox(width: 10,),
+                        const SizedBox(width: 10,),
                         Text("Date: ${todo.date.month}/${todo.date.day}/${todo.date.year}"),
                       ],
                     ),
@@ -88,11 +88,11 @@ class _HomePageState extends State<HomePage> {
                                 });
                               }
                             },
-                            icon: Icon(Icons.edit)),
+                            icon: const Icon(Icons.edit)),
                         IconButton(
-                          icon: Icon(Icons.delete),
+                          icon: const Icon(Icons.delete),
                           onPressed: () async{
-                            await TodoService().deleteTodo(todo.id);
+                            await TodoService().deleteTodo(index);
                             setState(() {});
                           },
                         ),
